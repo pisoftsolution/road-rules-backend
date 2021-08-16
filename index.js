@@ -1,20 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+var cors = require('cors')
 
 const authRoute = require('./routes/auth');
-const sgRoute = require('./routes/sendgrid');
-const twilio = require('./routes/twilio');
-
 
 const dbURI = "mongodb://localhost/authentication";
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cors());
 app.use('/api/auth' , authRoute);
-app.use('/api/verify' , sgRoute);
-app.use('/api/phone-verify' ,twilio);
-
-
  
 mongoose.connect(dbURI , {useNewUrlParser: true, useUnifiedTopology: true});
 
