@@ -6,6 +6,7 @@ var cors = require('cors')
 const authRoute = require('./routes/auth');
 
 const dbURI = "mongodb://localhost/authentication";
+
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
