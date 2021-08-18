@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const middleware = require('../middleware/authorization')
+const middleware = require('../middleware/authorization') 
 
 exports.registerUser = (req,res) => {
     User.find({email:req.body.email})

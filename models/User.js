@@ -7,7 +7,7 @@ const ClientSchema = mongoose.Schema({
       required: true,
       trim: true,
     },
-    email: {
+    email: { 
       type: String,
       unique: true,
       required: true,
