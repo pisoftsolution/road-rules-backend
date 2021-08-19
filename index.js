@@ -22,6 +22,6 @@ const db = mongoose.connection;
 
 db.on("error", (err)=> {console.error(err)});
 
-db.once("open", ()=>{console.log("DB started successfully")});
+db.once("open", ()=>{console.log("DB Started Successfully")});
 
-app.listen(8090, ()=>{console.log("Server started : 8090")});
+app.listen(8090, ()=>{console.log("Server Started : 8090")});

@@ -9,7 +9,7 @@ exports.phoneOtpSend = async (req,res)=>{
         verificationRequest = await twilio.verify.services(VERIFICATION_SID)
         .verifications
         .create({to: '+' + req.query.phone, channel});
-        return res.status(200).send({msg: "Verify otp send"});
+        return res.status(200).send({msg: "Verify Otp Send"});
     } catch(e){
         console.log(e);
         return res.status(400).send({msg: e});
