@@ -22,6 +22,15 @@ const ClientSchema = mongoose.Schema({
       type: String,
       required: true,
     },
+    emailOTP: {
+      type: String,
+   },
+   isEmailVerified: {
+      type: Boolean,
+   },
+   isPhoneVerified: {
+      type: Boolean,
+   }
 }) 
 
 module.exports = new mongoose.model("UserAuth", ClientSchema);
