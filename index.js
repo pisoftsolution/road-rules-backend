@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 app.use('/api/auth' , authRoute);
-app.use('/api/verify' , sgRoute);
 app.use('/api/phone-verify' ,twilio);
+app.use('/api/verify' , sgRoute);
  
 mongoose.connect(dbURI , {useNewUrlParser: true, useUnifiedTopology: true});
 
