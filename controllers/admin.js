@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require('../models/User');
-// const middleware = require('../middleware/authorization'); 
 
 exports.getUsers = (req, res) => {
   User.find({})

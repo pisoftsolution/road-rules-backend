@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const SlotSchema =  mongoose.Schema({
+
     date: {
       type: String,
       required: true,
@@ -28,4 +29,5 @@ const SlotSchema =  mongoose.Schema({
       type: String,
     }
 });
+
 module.exports = new mongoose.model("slot", SlotSchema);
