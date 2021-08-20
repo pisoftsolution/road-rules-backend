@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require('../models/SlotSchema');
-// const middleware = require('../middleware/authorization');
 
 exports.addSlot = (req,res) => {
     if(!req.body.date || !req.body.time || !req.body.clientLimit || !req.body.instructor || !req.body.instructorName
@@ -61,7 +60,6 @@ exports.getSlots =  ( req , res ) => {
 }
 
 exports.getSlotById =  ( req , res ) => {
-    // res.json(req.body); 
     if (!req.query.id) {
         return res.status(400).json({ msg: "You need to send the ID!" })
     }

@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const instructorSchema = require('../models/InstructorSchema');
-// const middleware = require('../middleware/authorization') 
 
 exports.addInstructor = async ( req , res ) => {
     if ( !req.body.fullName  || !req.body.phone || !req.body.email ){
