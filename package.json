@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true
+  },
   "keywords": [
     "example",
     "package.json",
@@ -29,6 +37,9 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.24.0"
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "prettier": "^2.3.2"
   }
 }
