@@ -32,4 +32,4 @@ db.on("error", (err)=> {console.error(err)});
 
 db.once("open", ()=>{console.log("DB Started Successfully")});
 
-app.listen(8095, ()=>{console.log("Server Started : 8095")});
+app.listen(8092, ()=>{console.log("Server Started : 8092")});

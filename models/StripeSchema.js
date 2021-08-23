@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const StripeSchema =  mongoose.Schema({
 
-    amount: {
+  amount: {
       type: String,
       required: true,
     },
