@@ -15,7 +15,7 @@ const ClientSchema = mongoose.Schema({
       trim: true,
     }, 
     phone: {
-      type: String,
+      type: String, 
       required: true,
     },
     password: {

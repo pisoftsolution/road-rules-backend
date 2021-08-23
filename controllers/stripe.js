@@ -1,13 +1,13 @@
-const express = require("express");
-const Stripe = require('stripe');
+const express = require('express');
 const StripeSchema = require('../models/StripeSchema');
+const SuccessSchema = require('../models/SuccessSchema');
+const middleware = require('../middleware/authorization');
 
-const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
-
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 const app = express();
 app.set("view engine", "pug");
 
-exports.shoppingOnline = async ( req , res ) => {
+exports.addAmount =  ( req , res ) => {
     if ( !req.body.amount ){
         res.status(400).json({msg:"Amount Not Proceed"});
     }  
@@ -25,21 +25,43 @@ exports.shoppingOnline = async ( req , res ) => {
     })
 }
 
+exports.getAmountById = (req,res) => {
+    if (!req.query.id) {
+        return res.status(400).json({msg: "You Need To Send The ID!"});
+    }
+    StripeSchema.find({_id: req.query.id})
+    .then(user=> {
+        return res.status(200).json({user : user});
+    })
+    .catch(err=> {
+        return res.status(200).json({msg : err.message});
+    })
+}
+
+exports.payment = async ( req , res ) => {
+    const {email,price} = req.body;
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: price,
+        currency: 'usd',
+        // Verify your integration in this guide by including this parameter
+        metadata: {integration_check: 'accept_a_payment'},
+        receipt_email: email,
+      });
+      res.json({'client_secret': paymentIntent['client_secret']})
+}
+
 // exports.paymentIntent = async ( req , res ) => {
-//     const session = await StripeSchema.checkout.sessions.create({
+//     const session = await StripeSchema.checkout.sessions.create({ 
 //         payment_method_types: ['card'],
-//         line_items: [
-//           {
+//         // line_items: [
+//         //   {
 //             price_data: {
 //               currency: 'usd',
-//               product_data: {
-//                 name: 'T-shirt',
-//               },
-//               unit_amount: 2000,
+//               unit_amount: req.body.unit_amount,
 //             },
-//             quantity: 1,
-//           },
-//         ],
+//             quantity: req.body.quantity,
+//         //   },
+//         // ],
 //         mode: 'payment',
 //         success_url: 'http://localhost:3000/success',
 //         cancel_url: 'http://localhost:3000/cancel',
@@ -48,10 +70,10 @@ exports.shoppingOnline = async ( req , res ) => {
 //       res.json({ id: session.id });
 // }
 
-// exports.successPayment =  ( req , res ) => {
-//     res.send('Success Route');
+// exports.success = async ( req , res ) => {
+//     res.send("routes")
 // }
 
-// exports.cancelPayment =  ( req , res ) => {
-//     res.send('Cancel Route');
+// exports.cancel = async ( req , res ) => {
+//     res.send("routes")
 // }
