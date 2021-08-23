@@ -1,5 +1,6 @@
 const User = require('../models/SlotSchema');
 
+//checking
 exports.addSlot = async (req,res) => {
     if(!req.body.date || !req.body.time || !req.body.clientLimit || !req.body.instructor || !req.body.instructorName
         || !req.body.status|| !req.body.booking) {
