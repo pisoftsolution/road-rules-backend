@@ -3,10 +3,6 @@ const StripeSchema = require('../models/StripeSchema');
 const SuccessSchema = require('../models/SuccessSchema');
 const middleware = require('../middleware/authorization');
 
-const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
-const app = express();
-app.set("view engine", "pug");
-
 exports.addAmount =  ( req , res ) => {
     if ( !req.body.amount ){
         res.status(400).json({msg:"Amount Not Proceed"});
@@ -39,6 +35,26 @@ exports.getAmountById = (req,res) => {
 }
 
 exports.payment = async ( req , res ) => {
+    const session = await StripeSchema.checkout.sessions.create({ 
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              unit_amount: req.body.unit_amount,
+            },
+            quantity: req.body.quantity,
+          },
+        ],
+        mode: 'payment',
+        success_url: 'http://localhost:3000/success',
+        cancel_url: 'http://localhost:3000/cancel',
+      });
+    
+      res.json({ id: session.id });
+}
+
+exports.paymentReceipt = async ( req , res ) => {
     const {email,price} = req.body;
     const paymentIntent = await stripe.paymentIntents.create({
         amount: price,
@@ -49,26 +65,6 @@ exports.payment = async ( req , res ) => {
       });
       res.json({'client_secret': paymentIntent['client_secret']})
 }
-
-// exports.paymentIntent = async ( req , res ) => {
-//     const session = await StripeSchema.checkout.sessions.create({ 
-//         payment_method_types: ['card'],
-//         // line_items: [
-//         //   {
-//             price_data: {
-//               currency: 'usd',
-//               unit_amount: req.body.unit_amount,
-//             },
-//             quantity: req.body.quantity,
-//         //   },
-//         // ],
-//         mode: 'payment',
-//         success_url: 'http://localhost:3000/success',
-//         cancel_url: 'http://localhost:3000/cancel',
-//       });
-    
-//       res.json({ id: session.id });
-// }
 
 // exports.success = async ( req , res ) => {
 //     res.send("routes")
