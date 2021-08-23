@@ -17,7 +17,7 @@ exports.addAmount =  ( req , res ) => {
     pay.save()
     .then(b=>{
         if (b) {
-            res.status(200).json({b});
+            res.status(200).json({b}); 
         }
     })
     .catch(err=>{
