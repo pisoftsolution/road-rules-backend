@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken");
 const instructorSchema = require('../models/InstructorSchema');
-// const middleware = require('../middleware/authorization') 
 
 exports.addInstructor = async ( req , res ) => {
     if ( !req.body.fullName  || !req.body.phone || !req.body.email ){
-        res.status(400).json({msg:"Instructor does not exit"});
+        res.status(400).json({msg:"Instructor Does Not Exit"});
     }  
     let instruct = new instructorSchema ({
         fullName : req.body.fullName,
@@ -34,7 +33,7 @@ exports.getAll =  ( req , res ) => {
 }
 exports.getInstructorById =  ( req , res ) => {
     if (!req.query.id) {
-        return res.status(400).json({ msg: "You need to send the ID!" })
+        return res.status(400).json({ msg: "You Need To Send ID!" })
     }
     instructorSchema.find({ _id: req.query.id })
     .then(b => {

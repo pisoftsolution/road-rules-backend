@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const User = require('../models/Slot');
 // const middleware = require('../middleware/authorization'); 
 
@@ -14,7 +13,7 @@ exports.getUsers = (req, res) => {
 
 exports.getUserById = (req, res) => {
     if (!req.query.id) {
-        return res.status(400).json({ msg: "You need to send the ID!" })
+        return res.status(400).json({ msg: "You Need To Send ID!" })
     }
     User.find({ _id: req.query.id })
     .then(user => {
