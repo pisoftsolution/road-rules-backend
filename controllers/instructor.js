@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const instructorSchema = require('../models/InstructorSchema');
 
 exports.addInstructor = async ( req , res ) => {
@@ -31,6 +30,7 @@ exports.getAll =  ( req , res ) => {
         return res.status(400).json({ msg: err.message })
     })
 }
+
 exports.getInstructorById =  ( req , res ) => {
     if (!req.query.id) {
         return res.status(400).json({ msg: "You need to send the ID!" })
@@ -43,6 +43,7 @@ exports.getInstructorById =  ( req , res ) => {
         return res.status(200).json({ msg: err.message });
     })
 }
+
 exports.deleteInstructor =  ( req , res ) => {
     instructorSchema.findByIdAndDelete({_id: req.query.id })
     .then(b => {
