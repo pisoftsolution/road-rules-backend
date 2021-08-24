@@ -5,5 +5,6 @@ const middleware = require('../middleware/authorization')
 
 router.post('/signup' , client.registerUser);
 router.get('/login' , client.loginUser);
+router.put('/change-password' , client.changePassword);
 
 module.exports = router;

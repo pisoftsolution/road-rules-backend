@@ -22,8 +22,7 @@ exports.addSlot = (req,res) => {
     })
     .catch(err=>{
         res.status(400).json({err});
-    })
-        
+    })     
 }
 
 exports.modifySlot =  ( req , res ) => {
@@ -70,6 +69,7 @@ exports.getSlotById =  ( req , res ) => {
         return res.status(200).json({ msg: err.message });
     })
 }
+
 exports.searchSlotByDate =  ( req , res ) => {
     if (!req.query.date) {
         return res.status(400).json({ msg: "Please enter date!" })

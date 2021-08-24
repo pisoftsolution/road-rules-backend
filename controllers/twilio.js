@@ -15,3 +15,34 @@ exports.phoneOtpSend = async (req,res)=>{
         return res.status(400).send({msg: e});
     }
 }
+
+exports.phoneOtpVerify = async (req,res)=>{                  
+    const {verificationCode: code } = req.body;
+    let verificationResult;
+    const errors = { wasValiated : true};
+    try {
+     verificationResult = await twilio.verify.services(VERIFICATION_SID)
+      .verificationChecks
+      .create({ code, to: '+'+ req.query.phone});
+     } catch(e){
+         console.log(e);
+         return res.status(500).send({msg: e});
+       }
+     if (verificationResult.status === 'approved') {
+         let user = await User.findOne({email: req.query.email});
+         if (user) {
+             user.isPhoneVerified = true;
+             user.save()
+             .then(u=>{
+                return res.status(200).send({msg: "Phone Verified Successfully "})
+             })
+             .catch(e=>{
+                return res.status(400).send({msg: e.message})
+              })
+         } else {
+                return res.status(400).send({msg: "User Does Not Exist"})
+               }
+     } else { 
+             return res.status(400).send({msg: `Unable To Verify Code. Status: ${verificationResult.status}`})
+            }
+ }
