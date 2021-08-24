@@ -19,18 +19,18 @@ exports.emailOTPSend = async (req, res)=>{
         subject : "six digit Random OTP",
         text: "Random OTP",
         html: `<h1>Random OTP</h1>
-               <pre>This is a Random OTP ${otp} </pre>`
+        <pre>This is a Random OTP ${otp} </pre>`
      }
     sgMail.send(msg)
     .then(info=>{
         user.emailOTP = otp;
         user.save()
         .then(u=>{
-            res.status(200).send({msg: "Otp Sent Successfully"});
+        res.status(200).send({msg: "Otp Sent Successfully"});
         })
     })
     .catch(err=>{
-        console.error(err);
-        res.status(400).send({msg: "Otp Not Send Please Try Again"});
+    console.error(err);
+    res.status(400).send({msg: "Otp Not Send Please Try Again"});
     })
 }

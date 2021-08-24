@@ -1,30 +1,35 @@
 const User = require('../models/SlotSchema');
 
-exports.addSlot = (req,res) => {
+//checking
+exports.addSlot = async (req,res) => {
     if(!req.body.date || !req.body.time || !req.body.clientLimit || !req.body.instructor || !req.body.instructorName
         || !req.body.status|| !req.body.booking) {
     return res.status(400).json({msg: "Invalid Data"})
     }
-    let user = new User ({
-        date : req.body.date,
-        time : req.body.time,
-        clientLimit : req.body.clientLimit , 
-        instructor : req.body.instructor , 
-        instructorName : req.body.instructorName,
-        status : req.body.status, 
-        booking : req.body.booking
-    });
-    user.save() 
-    .then(b=>{
-        if (b) {
-        res.status(200).json({b});
-    }
-    })
-    .catch(err=>{
-        res.status(400).json({err});
-    })
-        
-}
+    const user = await User.findById(req.query.body)
+    if(user){
+        let user = new User ({
+            date : req.body.date,
+            time : req.body.time,
+            clientLimit : req.body.clientLimit , 
+            instructor : req.body.instructor , 
+            instructorName : req.body.instructorName,
+            status : req.body.status, 
+            booking : req.body.booking
+        });
+        user.save() 
+        .then(b=>{
+            if (b) {
+                res.status(200).json({b});
+            }
+        })
+        .catch(err=>{
+            res.status(400).json({err});
+        })
+    } else {
+        res.status(400).json({msg: "Category does not exist"});
+    }  
+}    
 
 exports.modifySlot =  ( req , res ) => {
     User.findById(req.query.id)
