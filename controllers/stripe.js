@@ -2,18 +2,18 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const SuccessSchema = require('../models/SuccessSchema');
 
-exports.checkout = async (req ,res ) => {
+exports.checkout = async (req ,res) => {
    const session = await stripe.checkout.sessions.create({
     line_items: [
-        {
-          price: req.body.price ,
-        },
-      ],
+      {
+        price: req.body.price ,
+      },
+    ],
        mode: 'payment',
        success_url: 'http://localhost:3000/success',
        cancel_url: 'http://localhost:3000/cancel',
-   });
-res.json({ id: session.id });
+    });
+       res.json({ id: session.id });
 }
 
 exports.confirmPayment = async (req ,res ) => {
