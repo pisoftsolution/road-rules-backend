@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const InstructorSchema =  mongoose.Schema({
-  
     fullName: {
       type: String,
       required: true,
