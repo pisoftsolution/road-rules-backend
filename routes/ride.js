@@ -3,7 +3,6 @@ const router = express.Router();
 const ride = require('../controllers/ride');
 const middleware = require('../middleware/authorization') 
 
-
 router.post('/add-ride-cash', middleware.verify , ride.addRideCash);
 router.post('/add-booking-cash', middleware.verify,ride.addBookingCash);
 // router.get('/my-rides', middleware.verify,ride.myRides);
