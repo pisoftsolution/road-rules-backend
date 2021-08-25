@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { SENDGRID_API_KEY, SENDGRID_EMAIL } = process.env;
 const sgMail = require('@sendgrid/mail');
-const User = require('../models/User')
+const User = require('../models/Slot')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.emailOTPSend = async (req, res)=>{ 

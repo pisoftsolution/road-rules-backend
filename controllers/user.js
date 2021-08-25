@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require('../models/User');
+const User = require('../models/Slot');
 const bcrypt = require('bcrypt');
 const middleware = require('../middleware/authorization') 
 
@@ -53,7 +53,7 @@ exports.loginUser = (req,res)=>{
                     const token = jwt.sign({id: user.id, email: user.email}, "my-first-authorization", {
                     expiresIn: 60 * 60 * 12 * 24 
                 })
-                    return res.status(200).json({token: token})
+                return res.status(200).json({token: token})
                 } else {
                 return res.status(403).json({error: "Passwords Do Not Match"})
                 }
@@ -63,5 +63,5 @@ exports.loginUser = (req,res)=>{
 }
 
 exports.test = (req,res) =>{
-    return res.status(200).json({msg:"You Are Authorized"})
+return res.status(200).json({msg:"You Are Authorized"})
 }
