@@ -12,8 +12,8 @@ exports.registerUser = (req,res) => {
     })
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
-            console.error(err);
-            return res.status(400).json({msg: "Something Went Wrong"}); 
+        console.error(err);
+        return res.status(400).json({msg: "Something Went Wrong"}); 
     };
     bcrypt.hash(req.body.password, salt, function(err,hash) {
         if (err) {
@@ -45,21 +45,21 @@ exports.loginUser = (req,res)=>{
     User.findOne({email:req.body.email})
     .then(user =>{
         if (!user){
-          return res.status(401).json({msg:"User Does Not Exist"});
-         } else {
-              bcrypt.compare(req.body.password, user.password ,(error,match)=> {
-                  if (error) {
-                      res.status(500).json(error);
-                  } else if (match) {
-                           const token = jwt.sign({id: user.id, email: user.email}, "my-first-authorization", {
-                           expiresIn: 60 * 60 * 12 * 24 
-                           })
-                           return res.status(200).json({token: token})
-                         } else {
-                           return res.status(403).json({error: "Passwords Do Not Match"})
-                          }
-              })
-          } 
+        return res.status(401).json({msg:"User Does Not Exist"});
+        } else {
+            bcrypt.compare(req.body.password, user.password ,(error,match)=> {
+                if (error) {
+                    res.status(500).json(error);
+                } else if (match) {
+                    const token = jwt.sign({id: user.id, email: user.email}, "my-first-authorization", {
+                    expiresIn: 60 * 60 * 12 * 24 
+                })
+                    return res.status(200).json({token: token})
+                } else {
+                return res.status(403).json({error: "Passwords Do Not Match"})
+                }
+            })
+        } 
     })
 }
 
