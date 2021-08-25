@@ -8,7 +8,7 @@ exports.emailOTPSend = async (req, res)=>{
     if (!req.query.email){
         return res.status(400).send({msg:'You Need To Send Email'});
     }
-    let user = await User.findOne({email: req.query.email});
+    let user = await User.findOne({email: req.query.email}); 
     if (! user) {
         return res.status(400).send({msg:'User Does Not Exists'});
     }
@@ -33,4 +33,26 @@ exports.emailOTPSend = async (req, res)=>{
     console.error(err);
     res.status(400).send({msg: "Otp Not Send Please Try Again"});
     })
+}
+
+exports.emailOTPVerify = async (req, res)=>{ 
+    if (!req.query.email ||
+        !req.query.otp){
+        return res.status(400).send({msg:'You Need To Send Email and OTP'});
+    }
+    let user = await User.findOne({email: req.query.email});
+    if (! user) {
+        return res.status(400).send({msg:'User Does Not Exists'});
+    }
+   if (user.emailOTP == req.query.otp){
+       user.isEmailVerified = true;
+       user.save()
+         .then(u=>{
+         res.status(200).send({msg: "Email Verified Successfully"});
+       })
+       .catch(err=>{
+        console.error(err);
+        res.status(400).send({msg: err.message});
+       })
+   }
 }

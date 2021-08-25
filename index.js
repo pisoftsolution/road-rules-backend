@@ -10,6 +10,7 @@ const adminADD = require('./routes/admin');
 const instRoute = require('./routes/instructor');
 const slotRoute = require('./routes/slot');
 const stripeRoute = require('./routes/stripe');
+const addressRoute = require('./routes/address');
 
 const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
 
@@ -23,6 +24,7 @@ app.use('/api/instructor',instRoute);
 app.use('/api/admin',adminADD);
 app.use('/api/slot',slotRoute);
 app.use('/api/stripe',stripeRoute);
+app.use('/api/address',addressRoute);
  
 mongoose.connect(dbURI , {useNewUrlParser: true, useUnifiedTopology: true});
 

@@ -22,12 +22,13 @@ exports.registerUser = (req,res) => {
         } else {
              const incomingUser = {
                  ...req.body,
-                 "password": hash
+                 "password": hash,
+                 role : "user",
             };
             const newUser = User(incomingUser);
                 newUser.save()
                 .then(user=>{
-                    return res.status(200).json(user);
+                    return res.status(200).json(user); 
                 })
                 .catch(error=>{
                     if (error) {
@@ -60,6 +61,44 @@ exports.loginUser = (req,res)=>{
             })
         } 
     })
+}
+
+exports.changePassword = (req,res) =>{
+    const token = req.headers.authorization;
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace('-', '+').replace('_','/');
+    let decodedData = JSON.parse(Buffer.from(base64, 'base64').toString('binary'));
+    console.log(decodedData);
+    if(decodedData.email === req.body.email) {
+        bcrypt.genSalt(10, function(err, salt) {
+            if (err) {
+                console.error(err);
+                return res.status(400).json({msg: "Something Went Wrong"});
+            };
+            bcrypt.hash(req.body.password, salt, function(err,hash) {
+                if (err) {
+                    return res.status(400).json({msg: err.message});
+                } else {
+                    User.findById(decodedData.id)
+                    .then(user=>{
+                        user.password = hash;
+                        user.save()
+                        .then(u=>{
+                            return res.status(200).json({msg: "Password Changed Successfully"});
+                        })
+                        .catch(err=>{
+                            return res.status(400).json({msg:err.message});
+                        })
+                    })
+                    .catch(err=>{
+                        return res.status(400).json({msg: err.message});
+                    })
+                }
+            })
+        })
+    } else {
+        return res.status(500).json({msg: "You Are Not Authorized"});
+    }
 }
 
 exports.test = (req,res) =>{
