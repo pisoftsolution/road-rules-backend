@@ -9,7 +9,7 @@ exports.addAddress = async  ( req , res ) => {
         city : req.body.city,
         province : req.body.province,
         street: req.body.street,
-        postalCode: req.body.postalCode,
+        postalCode: req.body.postalCode, 
     });
     address.save()
     .then(a=>{
