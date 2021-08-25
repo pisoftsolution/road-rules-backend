@@ -11,4 +11,4 @@ router.get('/all-rides',middleware.verify, ride.allRides);
 router.get('/ride', middleware.verify , ride.getRideById);
 // router.get('/end-ride',middleware.verify, ride.endRide);
 // router.post('/feedback', middleware.verify,ride.feedback);
-module.exports = router; 
+module.exports = router;
