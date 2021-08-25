@@ -1,5 +1,4 @@
 const User = require('../models/Slot');
-// const middleware = require('../middleware/authorization'); 
 
 exports.getUsers = (req, res) => {
   User.find({})
