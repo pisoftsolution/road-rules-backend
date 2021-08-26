@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 const admin = require('../controllers/admin');
 
 router.get('/admin/get-users', admin.getUsers);

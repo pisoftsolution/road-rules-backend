@@ -2,52 +2,52 @@ const mongoose = require('mongoose');
 
 const RideSchema = new mongoose.Schema({
   client : {
-    type: String,
-    required: true,
+  type: String,
+  required: true,
   },
   clientName : {
-    type: String,
-    required: true,
+  type: String,
+  required: true,
   },
   instructor : {
-    type: String,
+  type: String,
   },
   booking: {
-    type:String,
-   },
+  type:String,
+  },
   instructorName : {
-    type: String,
+  type: String,
   },
   slot : {
-    type: String,
+  type: String,
   },
   date : {
-    type: String,
-    required: true,
+  type: String,
+  required: true,
   },
   time : {
-    type: String,
+  type: String,
   },
   status : {
-    type: String,
-    required: true,
+  type: String,
+  required: true,
   },
   modeOfPayment : {
-    type: String,
-    required: true,
+  type: String,
+  required: true,
   },
   price : {
-    type: String,
+  type: String,
   },
   feedback : {
-    type: String,
+  type: String,
   },
   address : {
-    type: String,
-    required: true,
+  type: String,
+  required: true,
   },
   rating: {
-    type: Number,
+  type: Number,
   }
 });
 

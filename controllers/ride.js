@@ -1,68 +1,69 @@
 const RideSchema = require('../models/RideSchema');
 
 exports.addRideCash = async  ( req , res ) => {
-    if ( !req.body.client ||!req.body.clientName || !req.body.instructor || !req.body.booking || !req.body.instructorName 
-        || !req.body.slot|| !req.body.date|| !req.body.time|| !req.body.status|| !req.body.modeOfPayment
-        || !req.body.price|| !req.body.feedback || !req.body.address || !req.body.rating){
-        res.status(400).json({msg:"This is not a valid data"});
+    if ( !req.body.client ||!req.body.clientName || !req.body.instructor || !req.body.booking 
+    || !req.body.instructorName || !req.body.slot || !req.body.date || !req.body.time 
+    || !req.body.status|| !req.body.modeOfPayment || !req.body.price|| !req.body.feedback 
+    || !req.body.address || !req.body.rating){
+    res.status(400).json({msg:"This is not a valid data"});
     }
     let ride = new RideSchema({
-        client : req.body.client,
-        clientName : req.body.clientName,
-        instructor: req.body.instructor,
-        booking: req.body.booking,
-        instructorName : req.body.instructorName,
-        slot : req.body.slot,
-        date : req.body.date,
-        time : req.body.time,
-        status : req.body.status,
-        modeOfPayment : req.body.modeOfPayment,
-        price : req.body.price,
-        feedback : req.body.feedback,
-        address : req.body.address,
-        rating : req.body.rating,
+    client : req.body.client,
+    clientName : req.body.clientName,
+    instructor: req.body.instructor,
+    booking: req.body.booking,
+    instructorName : req.body.instructorName,
+    slot : req.body.slot,
+    date : req.body.date,
+    time : req.body.time,
+    status : req.body.status,
+    modeOfPayment : "Cash",
+    price : req.body.price,
+    feedback : req.body.feedback,
+    address : req.body.address,
+    rating : req.body.rating,
     });
     ride.save()
     .then(b=>{
-        if (b) {
-            res.status(200).json({b});
-        }
+    if (b) {
+    res.status(200).json({b});
+    }
     })
     .catch(err=>{
-        res.status(400).json({err});
+    res.status(400).json({err});
     })
 }
 
 exports.addBookingCash = async  ( req , res ) => {
     if ( !req.body.client ||!req.body.clientName || !req.body.instructor || !req.body.booking || !req.body.instructorName 
-        || !req.body.slot|| !req.body.date|| !req.body.time|| !req.body.status|| !req.body.modeOfPayment
-        || !req.body.price|| !req.body.feedback || !req.body.address || !req.body.rating){
-        res.status(400).json({msg:"This is not a valid data"});
+    || !req.body.slot|| !req.body.date|| !req.body.time|| !req.body.status|| !req.body.modeOfPayment
+    || !req.body.price|| !req.body.feedback || !req.body.address || !req.body.rating){
+    res.status(400).json({msg:"This is not a valid data"});
     }
     let ride = new RideSchema({
-        client : req.body.client,
-        clientName : req.body.clientName,
-        instructor: req.body.instructor,
-        booking: req.body.booking,
-        instructorName : req.body.instructorName,
-        slot : req.body.slot,
-        date : req.body.date,
-        time : req.body.time,
-        status : req.body.status,
-        modeOfPayment : req.body.modeOfPayment,
-        price : req.body.price,
-        feedback : req.body.feedback,
-        address : req.body.address,
-        rating : req.body.rating,
+    client : req.body.client,
+    clientName : req.body.clientName,
+    instructor: req.body.instructor,
+    booking: req.body.booking,
+    instructorName : req.body.instructorName,
+    slot : req.body.slot,
+    date : req.body.date,
+    time : req.body.time,
+    status : req.body.status,
+    modeOfPayment : req.body.modeOfPayment,
+    price : req.body.price,
+    feedback : req.body.feedback,
+    address : req.body.address,
+    rating : req.body.rating,
     });
     ride.save()
     .then(b=>{
-        if (b) {
-            res.status(200).json({b});
-        }
+    if (b) {
+    res.status(200).json({b});
+    }
     })
     .catch(err=>{
-        res.status(400).json({err});
+    res.status(400).json({err});
     })
 }
 
