@@ -1,7 +1,7 @@
 const AddressSchema = require('../models/AdressSchema');
 const User = require('../models/User');
 
-exports.addAddress = async  ( req , res ) => {
+exports.addAddress = async ( req , res ) => {
     if ( !req.body.city ||!req.body.province || !req.body.street || !req.body.postalCode){
         res.status(400).json({msg:"This Is Invalid Data"});
     }

@@ -4,15 +4,16 @@ const app = express();
 var cors = require('cors')
 
 const authRoute = require('./routes/auth');
-const twilio = require('./routes/twilio');
-const sgRoute = require('./routes/sendgrid');
+const twilio = require('./routes/twilio');        
+const sgRoute = require('./routes/sendgrid'); 
 const adminADD = require('./routes/admin');
-const instRoute = require('./routes/instructor');
+const instRoute = require('./routes/instructor');    
 const slotRoute = require('./routes/slot');
 const stripeRoute = require('./routes/stripe');
 const addressRoute = require('./routes/address');
 
-const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
+// const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
+const dbURI = "mongodb://localhost/authentication";
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -34,4 +35,4 @@ db.on("error", (err)=> {console.error(err)});
 
 db.once("open", ()=>{console.log("DB Started Successfully")});
 
-app.listen(8092, ()=>{console.log("Server Started : 8092")});
+app.listen(8092, ()=>{console.log("Server Started : 8092")}); 

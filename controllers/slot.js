@@ -1,8 +1,8 @@
 const User = require('../models/SlotSchema');
 
 exports.addSlot = (req,res) => {
-    if(!req.body.date || !req.body.time || !req.body.clientLimit || !req.body.instructor || !req.body.instructorName
-        || !req.body.status|| !req.body.booking) {
+    if ( !req.body.date || !req.body.time || !req.body.clientLimit || !req.body.instructor || !req.body.instructorName
+        || !req.body.status|| !req.body.booking ) {
     return res.status(400).json({msg: "Invalid Data"})
     }
     let user = new User ({
@@ -17,8 +17,8 @@ exports.addSlot = (req,res) => {
     user.save() 
     .then(b=>{
         if (b) {
-        res.status(200).json({b});
-    }
+         res.status(200).json({b});
+        }
     })
     .catch(err=>{
         res.status(400).json({err});

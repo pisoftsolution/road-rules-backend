@@ -6,7 +6,7 @@ const middleware = require('../middleware/authorization')
 exports.registerUser = (req,res) => {
     User.find({email:req.body.email})
     .then(data=>{
-        if(data.length>0) {
+        if (data.length>0) {
             return res.status(400).json({msg: "User Already Exists"});
         }
     })
@@ -23,7 +23,7 @@ exports.registerUser = (req,res) => {
              const incomingUser = {
                  ...req.body,
                  "password": hash,
-                 role : "user",
+                //  role : "user",
             };
             const newUser = User(incomingUser);
                 newUser.save()
@@ -54,10 +54,10 @@ exports.loginUser = (req,res)=>{
                            const token = jwt.sign({id: user.id, email: user.email}, "my-first-authorization", {
                            expiresIn: 60 * 60 * 12 * 24 
                            })
-                           return res.status(200).json({token: token})
+                            return res.status(200).json({token: token})
                          } else {
-                           return res.status(403).json({error: "Passwords Do Not Match"})
-                          }
+                            return res.status(403).json({error: "Passwords Do Not Match"})
+                            }
               })
           } 
     })
@@ -69,7 +69,7 @@ exports.changePassword = (req,res) =>{
     let base64 = base64Url.replace('-', '+').replace('_','/');
     let decodedData = JSON.parse(Buffer.from(base64, 'base64').toString('binary'));
     console.log(decodedData);
-    if(decodedData.email === req.body.email) {
+    if (decodedData.email === req.body.email) {
         bcrypt.genSalt(10, function(err, salt) {
             if (err) {
                 console.error(err);
