@@ -13,7 +13,8 @@ const stripeRoute = require('./routes/stripe');
 const addressRoute = require('./routes/address');
 const rideRoute = require('./routes/ride');
 
-const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
+// const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
+const dbURI = "mongodb://localhost/authentication";
 
 app.use(express.json());
 app.use(express.urlencoded());

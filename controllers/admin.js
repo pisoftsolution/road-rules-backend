@@ -1,4 +1,4 @@
-const User = require('../models/Slot');
+const User = require('../models/UserSchema');
 
 exports.getUsers = (req, res) => {
   User.find({})

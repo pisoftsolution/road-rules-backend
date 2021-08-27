@@ -1,5 +1,5 @@
-const AddressSchema = require('../models/AdressSchema');
-const User = require('../models/Slot');
+const AddressSchema = require('../models/UserSchema');
+const ClientSchema = require('../models/UserSchema');
 
 exports.addAddress = async  ( req , res ) => {
     if ( !req.body.city ||!req.body.province || !req.body.street || !req.body.postalCode){
@@ -19,18 +19,5 @@ exports.addAddress = async  ( req , res ) => {
     })
     .catch(err=>{
     res.status(400).json({err});
-    })
-}
-
-exports.getUserById =  ( req , res ) => {
-    if (!req.query.id) {
-    return res.status(400).json({ msg: "Address ID Is Invalid!" })
-    }
-    AddressSchema.find({ _id: req.query.id })
-    .then(a=> {
-    return res.status(200).json({ a: a });
-    })
-    .catch(err => {
-    return res.status(200).json({ msg: err.message });
     })
 }
