@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require('../models/Slot');
+const User = require('../models/UserSchema');
 const bcrypt = require('bcrypt');
 const middleware = require('../middleware/authorization') 
 

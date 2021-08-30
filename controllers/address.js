@@ -1,5 +1,5 @@
-const AddressSchema = require('../models/AdressSchema');
-const User = require('../models/Slot');
+const AddressSchema = require('../models/UserSchema');
+const ClientSchema = require('../models/UserSchema');
 
 exports.addAddress = async (req, res) => {
   if (
@@ -23,7 +23,9 @@ exports.addAddress = async (req, res) => {
         res.status(200).json({ a });
       }
     })
-    .catch((err) => {
+
+}
+  .catch((err) => {
       res.status(400).json({ err });
     });
 };
@@ -40,3 +42,4 @@ exports.getUserById = (req, res) => {
       return res.status(200).json({ msg: err.message });
     });
 };
+
