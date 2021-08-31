@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); 
 const AddressSchema = new mongoose.Schema({
   city: {
     type: String,
-    required: true,
-  }, 
+    required: true, 
+  },
   province: {
     type: String,
     required: true,
@@ -38,10 +38,10 @@ const ClientSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  // role: {
-  //   type: String,
-  //   required: true,
-  // },
+  role: {
+    type: String,
+    required: true,
+  },
   emailOtp: {
     type: String,
   },
