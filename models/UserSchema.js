@@ -36,18 +36,18 @@ const ClientSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true, 
+    required: true,
   },
   role: {
     type: String,
     required: true,
   },
-  emailOTP: {
+  emailOtp: {
     type: String,
   },
-  // phoneOTP: {
-  //   type: String,
-  // },
+  phoneOtp: {
+    type: String,
+  },
   isEmailVerified: {
     type: Boolean,
   },
