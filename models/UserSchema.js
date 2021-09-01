@@ -17,7 +17,7 @@ const AddressSchema = new mongoose.Schema({
     required: true,
   },
 });
-const ClientSchema = mongoose.Schema({
+const ClientSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
@@ -36,18 +36,18 @@ const ClientSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: true, 
   },
   role: {
     type: String,
     required: true,
   },
-  emailOtp: {
+  emailOTP: {
     type: String,
   },
-  phoneOtp: {
-    type: String,
-  },
+  // phoneOTP: {
+  //   type: String,
+  // },
   isEmailVerified: {
     type: Boolean,
   },

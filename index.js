@@ -11,10 +11,10 @@ const instRoute = require('./routes/instructor');
 const slotRoute = require('./routes/slot');
 const stripeRoute = require('./routes/stripe');
 const addressRoute = require('./routes/address');
-const rideRoute = require('./routes/ride');
+const rideRoute = require('./routes/ride'); 
 
-// const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
-const dbURI = "mongodb://localhost/authentication";
+const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
+// const dbURI = "mongodb://localhost/authentication"; 
 
 app.use(express.json());
 app.use(express.urlencoded());
