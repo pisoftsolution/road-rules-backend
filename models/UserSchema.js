@@ -3,7 +3,7 @@ const AddressSchema = new mongoose.Schema({
   city: {
     type: String,
     required: true,
-  }, 
+  },
   province: {
     type: String,
     required: true,
@@ -17,7 +17,7 @@ const AddressSchema = new mongoose.Schema({
     required: true,
   },
 });
-const ClientSchema = mongoose.Schema({
+const ClientSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
@@ -38,10 +38,10 @@ const ClientSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  // role: {
-  //   type: String,
-  //   required: true,
-  // },
+  role: {
+    type: String,
+    required: true,
+  },
   emailOtp: {
     type: String,
   },
