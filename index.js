@@ -18,12 +18,8 @@ const aboutCards = require('./routes/aboutCards');
 const chooseRoute = require('./routes/choose');
 const contact = require('./routes/contact');
 
-// const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test";
-const dbURI = 'mongodb://localhost/authentication';
-const rideRoute = require('./routes/ride'); 
-
 // const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
-const dbURI = "mongodb://localhost/authentication"; 
+const dbURI = "mongodb://localhost/authentication";
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -45,28 +41,11 @@ app.use('/api/contact', contact);
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-app.use('/api/auth',authRoute);
-app.use('/api/verify',sgRoute);
-app.use('/api/verify' ,twilio);
-app.use('/api/instructor',instRoute);
-app.use('/api/admin',adminADD);
-app.use('/api/slot',slotRoute);
-app.use('/api/stripe',stripeRoute);
-app.use('/api/address',addressRoute);
-app.use('/api/ride',rideRoute);
- 
-mongoose.connect(dbURI , {useNewUrlParser: true, useUnifiedTopology: true});
-
 const db = mongoose.connection;
-db.on('error', (err) => {
-  console.error(err);
-});
-db.once('open', () => {
-  console.log('DB Started Successfully');
-});
 
-app.listen(8095, () => {
-  console.log('Server Started : 8095');
-});
-app.listen(8092, ()=>{console.log("Server Started : 8092")}); 
+db.on('error', (err) => { console.error(err) });
+
+db.once('open', () => { console.log('DB Started Successfully'); });
+
+app.listen(8092, () => { console.log("Server Started : 8092") });
 
