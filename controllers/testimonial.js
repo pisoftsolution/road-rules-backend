@@ -1,47 +1,67 @@
 const TestimonialSchema = require('../models/TestimonialSchema');
 
-exports.addTestimonial = async (req, res) => {
-  if (!req.body.name || !req.body.comment) {
-    res.status(400).json({ msg: 'This is invalid data' });
+exports.addTestimonial = (req, res) => {
+  if (!req.body.name ||
+    !req.body.comment) {
+    res.status(400).json({ msg: "This is invalid data" });
   }
-  let testimonial = new TestimonialSchema({
+  let about = new TestimonialSchema({
     name: req.body.name,
     comment: req.body.comment
   });
-  testimonial
-    .save()
-    .then((t) => {
-      if (t) {
-        res.status(200).json({ t });
+  about.save()
+    .then(b => {
+      if (b) {
+        res.status(200).json({ b });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(400).json({ err });
-    });
+    })
 };
 
 exports.getTestimonial = (req, res) => {
-  TestimonialSchema.findOne({})
-    .then((t) => {
-      return res.status(200).json({ t: t });
+  console.log(req.query);
+  TestimonialSchema.find({})
+    .then(b => {
+      res.status(200).json({ b: b });
     })
-    .catch((err) => {
-      return res.status(400).json({ msg: err.message });
+    .catch(err => {
+      res.status(400).json({ msg: err.message });
     });
 };
 
 exports.updateTestimonial = (req, res) => {
   TestimonialSchema.findById(req.query.id)
-    .then((t) => {
+    .then(b => {
       if (b) {
-        (t.name = req.body.name),
-          (t.comment = req.body.comment),
-          t.save().then((t1) => {
-            res.status(200).json(t1);
+        b.name = req.body.name;
+        b.comment = req.body.comment;
+        b.save()
+          .then(b2 => {
+            res.status(200).json(b2);
           });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(400).json({ err });
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
