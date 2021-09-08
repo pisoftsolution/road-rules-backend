@@ -1,24 +1,27 @@
 const User = require('../models/UserSchema');
 
 exports.getUsers = (req, res) => {
+  console.log(req.query);
   User.find({})
-    .then((users) => {
-      return res.status(200).json({ users: users });
+    .then(b => {
+      if (b) {
+        res.status(200).json({ b });
+      }
     })
-    .catch((err) => {
-      return res.status(400).json({ msg: err.message });
-    });
+    .catch(err => {
+      res.status(400).json({ err }); 
+    })
 };
 
 exports.getUserById = (req, res) => {
-  if (!req.query.id) {
-    return res.status(400).json({ msg: 'You Need To Send ID!' });
-  }
-  User.findOne({ _id: req.query.id })
-    .then((user) => {
-      return res.status(200).json({ user: user });
+  User.findById(req.query.id)
+    .then(b => {
+      if (b) {
+        res.status(200).json({ b });
+      }
     })
-    .catch((err) => {
-      return res.status(200).json({ msg: err.message });
-    });
+    .catch(err => {
+      res.status(400).json({ err });
+    })
 };
+
