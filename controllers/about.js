@@ -1,12 +1,10 @@
 const AboutSchema = require('../models/AboutSchema');
 
 exports.addAbout = (req, res) => {
-  if (!req.body.subHeading ||
-    !req.body.text) {
+  if ( !req.body.text) {
     res.status(400).json({ msg: "This is invalid data" });
   }
   let about = new AboutSchema({
-    subHeading: req.body.subHeading,
     text: req.body.text
   });
   about.save()
@@ -35,7 +33,6 @@ exports.updateAbout = (req, res) => {
   AboutSchema.findById(req.query.id)
     .then(b => {
       if (b) {
-        b.subHeading = req.body.subHeading;
         b.text = req.body.text;
         b.save()
           .then(b2 => {
