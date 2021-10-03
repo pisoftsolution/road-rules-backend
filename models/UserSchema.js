@@ -27,7 +27,7 @@ const ClientSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    lowercase: true,
+    // lowercase: true,
     trim: true,
   },
   phone: {

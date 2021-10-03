@@ -39,7 +39,7 @@ exports.updateTestimonial = (req, res) => {
         b.comment = req.body.comment;
         b.save()
           .then(b2 => {
-            res.status(200).json(b2);
+            res.status(200).json(b2); 
           });
       }
     })
