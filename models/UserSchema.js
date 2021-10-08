@@ -13,7 +13,7 @@ const AddressSchema = new mongoose.Schema({
     required: true,
   },
   postalCode: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
@@ -27,7 +27,7 @@ const ClientSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    // lowercase: true,
+    lowercase: true,
     trim: true,
   },
   phone: {

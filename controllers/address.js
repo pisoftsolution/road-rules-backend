@@ -1,17 +1,17 @@
 const ClientSchema = require('../models/UserSchema');
-// const AddressSchema = require('../models/UserSchema');
 
 exports.addAddress = async (req, res) => {
+  console.log(req.body);
   if (
     !req.body.city ||
     !req.body.province ||
     !req.body.street ||
     !req.body.postalCode ||
-    !req.query.email
+    !req.body.id
   ) {
     res.status(400).json({ msg: 'This Is Invalid Data' });
   }
-  let user = await ClientSchema.findOne({ email: req.query.email });
+  let user = await ClientSchema.findById(req.body.id);
   if (user) {
     let address = {
       city: req.body.city,
@@ -33,22 +33,15 @@ exports.addAddress = async (req, res) => {
   }
 };
 
-// exports.getAddress = (req, res) => {
-//   AddressSchema.find({})
-//     .then((b) => {
-//       return res.status(200).json({ b: b });
-//     })
-//     .catch((err) => {
-//       return res.status(400).json({ msg: err.message });
-//     });
-// };
-
-// exports.getClient = (req, res) => {
-//   ClientSchema.find({})
-//     .then((b) => {
-//       return res.status(200).json({ b: b });
-//     })
-//     .catch((err) => {
-//       return res.status(400).json({ msg: err.message });
-//     });
-// };
+exports.getAddressById = (req, res) => {
+  if (!req.query.id) {
+    return res.status(400).json({ msg: 'You Need To Send ID!' });
+  }
+  ClientSchema.findOne({ _id: req.query.id })
+    .then((b) => {
+      return res.status(200).json({ b: b.address });
+    })
+    .catch((err) => {
+      return res.status(200).json({ msg: err.message });
+    });
+};
