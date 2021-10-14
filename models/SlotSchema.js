@@ -10,9 +10,9 @@ const Slot =  mongoose.Schema({
     },
     clientLimit: {
     type: Number,
-    required: true,
+    // required: true,
     },
-    instructor: {
+    instructor: { 
     type: String,
     required: true,
     },
@@ -22,7 +22,7 @@ const Slot =  mongoose.Schema({
     },
     status: {
     type: String,
-    required: true,
+    // required: true,
     },
     booking :{
     type: String,
