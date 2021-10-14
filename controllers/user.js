@@ -4,39 +4,36 @@ const bcrypt = require('bcrypt');
 const middleware = require('../middleware/authorization');
 
 exports.registerUser = (req, res) => {
-  User.find({ email: req.body.email }).then((data) => {
-    if (data.length > 0) {
-      return res.status(400).json({ msg: 'User Already Exists' });
-    }
-  });
-  bcrypt.genSalt(10, function (err, salt) {
+  if (
+    !req.body.email ||
+    !req.body.fullName ||
+    !req.body.phone ||
+    !req.body.password
+  ) {
+    return res.status(400).json({ msg: 'Invalid Data' });
+  }
+  const incomingUser = {
+    email : req.body.email,
+    fullName : req.body.fullName,
+    phone : req.body.phone ,
+    password : req.body.password,
+    isPhoneVerified : false,
+    isEmailVerified : false,
+    role: 'user',
+  }
+  User.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
-      console.error(err);
-      return res.status(400).json({ msg: 'Something Went Wrong' });
+      return res.status(400).json({ msg: err });
     }
-    bcrypt.hash(req.body.password, salt, function (err, hash) {
+    if (user) {
+      return res.status(400).json({ msg: 'The User Already Exists' });
+    }
+    let newUser = User(incomingUser);
+    newUser.save((err, user) => {
       if (err) {
-        console.error(err);
-        return res.status(400).json({ msg: err.message });
-      } else {
-        const incomingUser = {
-          ...req.body,
-          password: hash,
-          role: 'user'
-        };
-        const newUser = User(incomingUser);
-        newUser
-          .save()
-          .then((user) => {
-            return res.status(200).json(user);
-          })
-          .catch((error) => {
-            if (error) {
-              console.error(error);
-              return res.status(400).json({ msg: error.message });
-            }
-          });
+        return res.status(400).json({ msg: err });
       }
+      return res.status(201).json(user);
     });
   });
 };
@@ -51,7 +48,7 @@ exports.loginUser = (req, res) => {
           res.status(500).json(error);
         } else if (match) {
           const token = jwt.sign(
-            { id: user.id, email: user.email },
+            { id: user.id, email: user.email, role:user.role },
             'my-first-authorization',
             {
               expiresIn: 60 * 60 * 12 * 24
