@@ -9,13 +9,13 @@ exports.addSlot = async (req, res) => {
     !req.body.instructor
   ) {
     return res.status(400).json({ msg: 'Invalid Data' });
-  } 
+  }
   const instructors = await Instructor.findById(req.body.instructor);
   if (instructors) {
     let slot = new Slot({
       ...req.body,
       instructorName: instructors.fullName,
-      status:"scheduled", 
+      status: 'scheduled'
     });
     slot
       .save()
@@ -33,30 +33,29 @@ exports.addSlot = async (req, res) => {
 };
 
 exports.modifySlot = async (req, res) => {
-  const instructors = await Instructor.findById(req.body.instructor)
-  if(instructors){
+  const instructors = await Instructor.findById(req.body.instructor);
+  if (instructors) {
     let slot = new Slot({
       ...req.body,
       instructorName: instructors.fullName,
-      status:"scheduled", 
+      status: 'scheduled'
     });
-  Slot.findById(req.query.id)
-    .then(b => {
-      if (b) {
-        b.date = req.body.date,
-        b.time = req.body.time,
-        b.clientLimit = req.body.clientLimit,
-        b.instructor = req.body.instructor, 
-        slot.save()
-        .then(b2 => {
-          res.status(200).json(b2);
-        });
-      }
-    })
-    .catch(err => {
-      res.status(400).json({ err });
-    });
-  } else{
+    Slot.findById(req.query.id)
+      .then((b) => {
+        if (b) {
+          (b.date = req.body.date),
+            (b.time = req.body.time),
+            (b.clientLimit = req.body.clientLimit),
+            (b.instructor = req.body.instructor),
+            slot.save().then((b2) => {
+              res.status(200).json(b2);
+            });
+        }
+      })
+      .catch((err) => {
+        res.status(400).json({ err });
+      });
+  } else {
     res.status(400).json({ msg: 'Instructor Does Not Exist' });
   }
 };
@@ -66,7 +65,7 @@ exports.modifySlot = async (req, res) => {
 //   if (instructors) {
 //     let slot = new Slot({
 //       ...req.body,
-      
+
 //     });
 //     Slot.findById(req.query.id)
 //       .then((b) => {
@@ -126,10 +125,10 @@ exports.searchSlotByDate = (req, res) => {
 
 exports.deleteSlot = (req, res) => {
   Slot.findByIdAndDelete({ _id: req.query.id })
-    .then((b) => { 
+    .then((b) => {
       return res.status(200).json({ b: b });
     })
     .catch((err) => {
-      return res.status(200).json({ msg: err.message }); 
+      return res.status(200).json({ msg: err.message });
     });
 };

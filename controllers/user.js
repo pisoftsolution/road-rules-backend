@@ -4,51 +4,92 @@ const bcrypt = require('bcrypt');
 const middleware = require('../middleware/authorization');
 
 exports.registerUser = (req, res) => {
-  if (
-    !req.body.email ||
-    !req.body.fullName ||
-    !req.body.phone ||
-    !req.body.password
-  ) {
-    return res.status(400).json({ msg: 'Invalid Data' });
-  }
-  const incomingUser = {
-    email : req.body.email,
-    fullName : req.body.fullName,
-    phone : req.body.phone ,
-    password : req.body.password,
-    isPhoneVerified : false,
-    isEmailVerified : false,
-    role: 'user',
-  }
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.find({ email: req.body.email }).then((data) => {
+    if (data.length > 0) {
+      return res.status(400).json({ msg: 'User Already Exists' });
+    }
+  });
+  bcrypt.genSalt(10, function (err, salt) {
     if (err) {
-      return res.status(400).json({ msg: err });
+      console.error(err);
+      return res.status(400).json({ msg: 'Something Went Wrong' });
     }
-    if (user) {
-      return res.status(400).json({ msg: 'The User Already Exists' });
-    }
-    let newUser = User(incomingUser);
-    newUser.save((err, user) => {
+    bcrypt.hash(req.body.password, salt, function (err, hash) {
       if (err) {
-        return res.status(400).json({ msg: err });
+        console.error(err);
+        return res.status(400).json({ msg: err.message });
+      } else {
+        const incomingUser = {
+          ...req.body,
+          password: hash,
+          role: 'user'
+        };
+        const newUser = User(incomingUser);
+        newUser
+          .save()
+          .then((user) => {
+            return res.status(200).json(user);
+          })
+          .catch((error) => {
+            if (error) {
+              console.error(error);
+              return res.status(400).json({ msg: error.message });
+            }
+          });
       }
-      return res.status(201).json(user);
     });
   });
 };
 
+// exports.registerUser = (req, res) => {
+//   if (
+//     !req.body.email ||
+//     !req.body.fullName ||
+//     !req.body.phone ||
+//     !req.body.password
+//   ) {
+//     return res.status(400).json({ msg: 'Invalid Data' });
+//   }
+//   const incomingUser = {
+//     email : req.body.email,
+//     fullName : req.body.fullName,
+//     phone : req.body.phone ,
+//     password : req.body.password,
+//     isPhoneVerified : false,
+//     isEmailVerified : false,
+//     role: 'user',
+//   }
+//   User.findOne({ email: req.body.email }, (err, user) => {
+//     if (err) {
+//       return res.status(400).json({ msg: err });
+//     }
+//     if (user) {
+//       return res.status(400).json({ msg: 'The User Already Exists' });
+//     }
+//     let newUser = User(incomingUser);
+//     newUser.save((err, user) => {
+//       if (err) {
+//         return res.status(400).json({ msg: err });
+//       }
+//       return res.status(201).json(user);
+//     });
+//   });
+// };
+
 exports.loginUser = (req, res) => {
+  console.log(req.body);
   User.findOne({ email: req.body.email }).then((user) => {
     if (!user) {
       return res.status(401).json({ msg: 'User Does Not Exist' });
     } else {
       bcrypt.compare(req.body.password, user.password, (error, match) => {
         if (error) {
+          console.log(error);
           res.status(500).json(error);
         } else if (match) {
+          console.log(match);
           const token = jwt.sign(
-            { id: user.id, email: user.email, role:user.role },
+            { id: user._id, email: user.email, role: user.role },
             'my-first-authorization',
             {
               expiresIn: 60 * 60 * 12 * 24
