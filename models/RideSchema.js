@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const RideSchema = new mongoose.Schema({
   client : {
   type: String,

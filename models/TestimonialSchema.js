@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const TestimonialSchema = new mongoose.Schema({
   name: {
     type: String,

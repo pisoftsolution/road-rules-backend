@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const ChooseSchema = new mongoose.Schema({
   point: {
     type: String,
