@@ -6,16 +6,16 @@ exports.addSlot = async (req, res) => {
     !req.body.date ||
     !req.body.time ||
     !req.body.clientLimit ||
-    !req.body.instructor ||
-    !req.body.instructorName ||
-    !req.body.status
+    !req.body.instructor
   ) {
     return res.status(400).json({ msg: 'Invalid Data' });
   }
   const instructors = await Instructor.findById(req.body.instructor);
   if (instructors) {
     let slot = new Slot({
-      ...req.body
+      ...req.body,
+      instructorName: instructors.fullName,
+      status: 'scheduled'
     });
     slot
       .save()
@@ -35,22 +35,21 @@ exports.addSlot = async (req, res) => {
 exports.modifySlot = async (req, res) => {
   const instructors = await Instructor.findById(req.body.instructor);
   if (instructors) {
-    let b = new Slot({
-      ...req.body
+    let slot = new Slot({
+      ...req.body,
+      instructorName: instructors.fullName,
+      status: 'scheduled'
     });
     Slot.findById(req.query.id)
       .then((b) => {
         if (b) {
           (b.date = req.body.date),
             (b.time = req.body.time),
-            (b.clientLimit = req.body.b.clientLimit),
+            (b.clientLimit = req.body.clientLimit),
             (b.instructor = req.body.instructor),
-            (b.instructorName = req.body.instructorName),
-            (b.status = req.body.status),
-            (b.booking = req.body.booking);
-          b.save().then((b2) => {
-            res.status(200).json(b2);
-          });
+            slot.save().then((b2) => {
+              res.status(200).json(b2);
+            });
         }
       })
       .catch((err) => {
@@ -60,6 +59,34 @@ exports.modifySlot = async (req, res) => {
     res.status(400).json({ msg: 'Instructor Does Not Exist' });
   }
 };
+
+// exports.modifySlot = async (req, res) => {
+//   const instructors = await Instructor.findById(req.body.instructor);
+//   if (instructors) {
+//     let slot = new Slot({
+//       ...req.body,
+
+//     });
+//     Slot.findById(req.query.id)
+//       .then((b) => {
+//         if (b) {
+//           (b.date = req.body.date),
+//             (b.time = req.body.time),
+//             (b.clientLimit = req.body.b.clientLimit),
+//             (b.instructor = req.body.instructor),
+//             (b.instructorName = instructors.instructorName),
+//           slot.save().then((b2) => {
+//             res.status(200).json(b2);
+//           });
+//         }
+//       })
+//       .catch((err) => {
+//         res.status(400).json({ err });
+//       });
+//   } else {
+//     res.status(400).json({ msg: 'Instructor Does Not Exist' });
+//   }
+// };
 
 exports.getSlots = (req, res) => {
   Slot.find({})

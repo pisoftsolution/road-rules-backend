@@ -18,8 +18,8 @@ const aboutCards = require('./routes/aboutCards');
 const chooseRoute = require('./routes/choose');
 const contact = require('./routes/contact');
 
-// const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test"; 
-const dbURI = "mongodb://localhost/authentication";
+// const dbURI = "mongodb+srv://root:junaid@cluster0.qxafi.mongodb.net/test";
+const dbURI = 'mongodb://localhost/authentication';
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -43,9 +43,14 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
-db.on('error', (err) => { console.error(err) });
+db.on('error', (err) => {
+  console.error(err);
+});
 
-db.once('open', () => { console.log('DB Started Successfully'); });
+db.once('open', () => {
+  console.log('DB Started Successfully');
+});
 
-app.listen(8092, () => { console.log("Server Started : 8092") });
-
+app.listen(8092, () => {
+  console.log('Server Started : 8092');
+});
